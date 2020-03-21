@@ -26,7 +26,7 @@
         FontSize="60" Grid.ColumnSpan="4" />
         <Button Text = "C" x:Name="clearBtn" Clicked="clearBtn_Clicked" Grid.Row="1" Grid.Column="0" BackgroundColor="#F6F6F6" /> <!-- #F6F6F6 is Gray -->
         <Button Text = "DEL" x:Name="delBtn" Clicked="delBtn_Clicked" Grid.Row="1" Grid.Column="1" BackgroundColor="#F6F6F6"/>
-        <Button Text = "%" x:Name="modBtn" Clicked="modBtn_Clicked" Grid.Row="1" Grid.Column="2" BackgroundColor="#F6F6F6"/>
+        <Button Text = "%" x:Name="modBtn" Clicked="perBtn_Clicked" Grid.Row="1" Grid.Column="2" BackgroundColor="#F6F6F6"/>
         <Button Text = "/" x:Name="divBtn" Clicked="divBtn_Clicked" Grid.Row="1" Grid.Column="3" BackgroundColor="#FFA500" /> <!-- #FF500 is orange-->
         <Button Text = "7" x:Name="sevenBtn" Clicked="sevenBtn_Clicked" Grid.Row="2" Grid.Column="0" BackgroundColor="#F6F6F6" />
         <Button Text = "8" x:Name="eightBtn" Clicked="eightBtn_Clicked" Grid.Row="2" Grid.Column="1" BackgroundColor="#F6F6F6" />
@@ -46,3 +46,4 @@
     </Grid>
     
 </ContentPage>
+<!--Output of Magsipoc, Orbiso, Quinicot-->

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-
+//Output of Magsipoc, Orbiso, Quinicot
 namespace Calculator
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
@@ -16,22 +16,25 @@ namespace Calculator
         struct Equation
         {
             public float num1;
+            public float num2;
             public int operatorSymbol;
         }
 
         Equation equation = new Equation();
-        public bool isSecond;
+        public bool isSecond; //Checks if it's the second operand
         public MainPage()
         {
             InitializeComponent();
-            result.Text = "0";
+            result.Text = 0.ToString();
+            isSecond = false;
         }
 
         private void displayNum(float num)
         {
-            if(isSecond == true)
+            if (isSecond == true)
             {
-                result.Text = "0";
+                result.Text = 0.ToString();
+                isSecond = false;
             }
             if (char.IsNumber(result.Text.Last()))
             {
@@ -43,32 +46,51 @@ namespace Calculator
             }
             else
             {
-                if (num != 0)
+                if (num != 0 || result.Text == "0.")
                 {
                     result.Text += num; //
                 }
             }
         }
 
+        private void checkUndefined()
+        {
+            if (result.Text == "undefined" || result.Text == "NaN") //Resets num1 as 0 so the user can proceed normally
+            {
+                equation.num1 = 0;
+            }
+            else
+            {
+                equation.num1 = float.Parse(result.Text);
+            }
+        }
+
         private void performOperation(Equation equation)
         {
-            float num2 = float.Parse(result.Text);
+            equation.num2 = float.Parse(result.Text);
             switch (equation.operatorSymbol)
             {
                 case 1:
-                    result.Text = (equation.num1 + num2).ToString();
+                    result.Text = (equation.num1 + equation.num2).ToString();
                     break;
                 case 2:
-                    result.Text = (equation.num1 - num2).ToString();
+                    result.Text = (equation.num1 - equation.num2).ToString();
                     break;
                 case 3:
-                    result.Text = (equation.num1 * num2).ToString();
+                    result.Text = (equation.num1 * equation.num2).ToString();
                     break;
                 case 4:
-                    result.Text = (equation.num1 / num2).ToString();
+                    if (equation.num1 == 0 && equation.num2 == 0) //Checks for 0/0
+                    {
+                        result.Text = "undefined";
+                    }
+                    else
+                    {
+                        result.Text = (equation.num1 / equation.num2).ToString();
+                    }
                     break;
                 case 5:
-                    result.Text = (equation.num1 % num2).ToString();
+                    result.Text = (equation.num1 / 100).ToString();
                     break;
             }
         }
@@ -81,9 +103,9 @@ namespace Calculator
 
         private void delBtn_Clicked(object sender, EventArgs e)
         {
-            if(result.Text.Length == 1)
+            if(result.Text.Length == 1 || result.Text == "undefined" || result.Text == "NaN")
             {
-                result.Text = "0";
+                result.Text = 0.ToString();
             }
             else
             {
@@ -91,16 +113,16 @@ namespace Calculator
             }
         }
 
-        private void modBtn_Clicked(object sender, EventArgs e)
+        private void perBtn_Clicked(object sender, EventArgs e)
         {
-            equation.num1 = float.Parse(result.Text);
-            equation.operatorSymbol = 5;
-            isSecond = true;
+            checkUndefined();
+            equation.operatorSymbol = 5; 
+            performOperation(equation); //Automatically performs the function when pressed
         }
 
         private void divBtn_Clicked(object sender, EventArgs e)
         {
-            equation.num1 = float.Parse(result.Text);
+            checkUndefined();
             equation.operatorSymbol = 4;
             isSecond = true;
         }
@@ -122,7 +144,7 @@ namespace Calculator
 
         private void multBtn_Clicked(object sender, EventArgs e)
         {
-            equation.num1 = float.Parse(result.Text);
+            checkUndefined();
             equation.operatorSymbol = 3;
             isSecond = true;
         }
@@ -144,7 +166,7 @@ namespace Calculator
 
         private void subBtn_Clicked(object sender, EventArgs e)
         {
-            equation.num1 = float.Parse(result.Text);
+            checkUndefined();
             equation.operatorSymbol = 2;
             isSecond = true;
         }
@@ -166,7 +188,7 @@ namespace Calculator
 
         private void addBtn_Clicked(object sender, EventArgs e)
         {
-            equation.num1 = float.Parse(result.Text);
+            checkUndefined();
             equation.operatorSymbol = 1;
             isSecond = true;
         }
@@ -178,7 +200,10 @@ namespace Calculator
 
         private void decBtn_Clicked(object sender, EventArgs e)
         {
-
+            if(!result.Text.Contains('.')) //Checks if the number is a float
+            {
+                result.Text += ".";
+            }
         }
 
         private void equalBtn_Clicked(object sender, EventArgs e)
